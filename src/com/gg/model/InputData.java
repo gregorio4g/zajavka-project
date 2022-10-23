@@ -52,10 +52,6 @@ public class InputData {
 		return repaymentStartDate;
 	}
 
-	public BigDecimal getWiborPercent() {
-		return wiborPercent;
-	}
-
 	public BigDecimal getAmount() {
 		return amount;
 	}
@@ -68,13 +64,10 @@ public class InputData {
 		return rateType;
 	}
 
-	public BigDecimal getBankMarginPercent() {
-		return bankMarginPercent;
-	}
-
 	public BigDecimal getInterestPercent() {
 		return wiborPercent.add(bankMarginPercent).divide(PERCENT, 10, RoundingMode.HALF_UP);
 	}
+
 	public BigDecimal getInterestDisplay() {
 		return wiborPercent.add(bankMarginPercent).setScale(2, RoundingMode.HALF_UP);
 	}

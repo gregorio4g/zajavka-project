@@ -1,8 +1,7 @@
 package com.gg;
 
 import com.gg.model.InputData;
-import com.gg.service.PrintingService;
-import com.gg.service.PrintingServiceImpl;
+import com.gg.service.*;
 
 import java.math.BigDecimal;
 
@@ -14,6 +13,12 @@ public class Main {
 				.withMonthsDuration(BigDecimal.valueOf(160));
 
 		PrintingService printingService = new PrintingServiceImpl();
-		printingService.printInputDataInfo(inputData);
+		RateCalculationService rateCalculationService = new RateCalculationServiceImpl();
+
+		MortgageCalculationService mortgageCalculationService = new MortgageCalculationServiceImpl(
+				printingService,
+				rateCalculationService
+		);
+		mortgageCalculationService.calculate(inputData);
 	}
 }
