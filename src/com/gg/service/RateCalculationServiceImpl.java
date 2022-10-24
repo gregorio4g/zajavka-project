@@ -1,8 +1,6 @@
 package com.gg.service;
 
-import com.gg.model.InputData;
-import com.gg.model.Rate;
-import com.gg.model.TimePoint;
+import com.gg.model.*;
 
 import java.math.BigDecimal;
 import java.util.LinkedList;
@@ -15,6 +13,16 @@ public class RateCalculationServiceImpl implements RateCalculationService {
 	private final	AmountsCalculationService amountsCalculationService;
 
 	private final ResidualCalculationService residualCalculationService;
+
+	public RateCalculationServiceImpl(
+			TimePointService timePointService,
+			AmountsCalculationService amountsCalculationService,
+			ResidualCalculationService residualCalculationService
+	) {
+		this.timePointService = timePointService;
+		this.amountsCalculationService = amountsCalculationService;
+		this.residualCalculationService = residualCalculationService;
+	}
 
 	@Override
 	public List<Rate> calculate(InputData inputData) {
@@ -42,12 +50,18 @@ public class RateCalculationServiceImpl implements RateCalculationService {
 	}
 
 	private Rate calculateRate(BigDecimal rateNumber, InputData inputData) {
-		TimePoint timePoint = timePointService.calculate();
+		TimePoint timePoint = timePointService.calculate(rateNumber, inputData);
+		RateAmounts rateAmounts = amountsCalculationService.calculate();
+		MortgageResidual mortgageResidual = residualCalculationService.calculate();
 
-		return new Rate();
+		return new Rate(rateNumber, timePoint, rateAmounts, mortgageResidual);
 	}
 
 	private Rate calculateRate(BigDecimal rateNumber, InputData inputData, Rate previousRate) {
-		return new Rate();
+		TimePoint timePoint = timePointService.calculate(rateNumber, inputData);
+		RateAmounts rateAmounts = amountsCalculationService.calculate();
+		MortgageResidual mortgageResidual = residualCalculationService.calculate();
+
+		return new Rate(rateNumber, timePoint, rateAmounts, mortgageResidual);
 	}
 }
