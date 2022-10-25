@@ -28,4 +28,5 @@ public class TimePoint {
 	public BigDecimal getMonth() {
 		return month;
 	}
+
 }

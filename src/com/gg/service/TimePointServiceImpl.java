@@ -30,6 +30,6 @@ public class TimePointServiceImpl implements TimePointService {
 	}
 
 	private BigDecimal calculateMonth(final BigDecimal rateNumber) {
-		return rateNumber.remainder(YEAR);
+		return BigDecimal.ZERO.equals(rateNumber.remainder(YEAR)) ? YEAR : rateNumber.remainder(YEAR);
 	}
 }

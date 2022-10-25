@@ -1,9 +1,6 @@
 package com.gg;
 
-import com.gg.model.InputData;
-import com.gg.model.MortgageResidual;
-import com.gg.model.RateAmounts;
-import com.gg.model.TimePoint;
+import com.gg.model.*;
 import com.gg.service.*;
 
 import java.math.BigDecimal;
@@ -13,7 +10,8 @@ public class Main {
 	public static void main(String[] args) {
 		InputData inputData = new InputData()
 				.withAmount(BigDecimal.valueOf(298000))
-				.withMonthsDuration(BigDecimal.valueOf(160));
+				.withMonthsDuration(BigDecimal.valueOf(360))
+				.withRateType(RateType.CONSTANT);
 
 		PrintingService printingService = new PrintingServiceImpl();
 		RateCalculationService rateCalculationService = new RateCalculationServiceImpl(
@@ -24,7 +22,8 @@ public class Main {
 
 		MortgageCalculationService mortgageCalculationService = new MortgageCalculationServiceImpl(
 				printingService,
-				rateCalculationService
+				rateCalculationService,
+				SummaryServiceFactory.create()
 		);
 		mortgageCalculationService.calculate(inputData);
 	}

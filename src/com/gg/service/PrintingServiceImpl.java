@@ -1,10 +1,16 @@
 package com.gg.service;
 
 import com.gg.model.InputData;
+import com.gg.model.Rate;
+import com.gg.model.Summary;
+
+import java.math.RoundingMode;
+import java.util.List;
 
 public class PrintingServiceImpl implements PrintingService {
 
 	@Override
+	@SuppressWarnings("StringBufferReplaceableByString")
 	public void printInputDataInfo(InputData inputData) {
 		StringBuilder msg = new StringBuilder(NEW_LINE);
 		msg.append(MORTGAGE_AMOUNT).append(inputData.getAmount()).append(CURRENCY);
@@ -14,10 +20,53 @@ public class PrintingServiceImpl implements PrintingService {
 		msg.append(INTEREST).append(inputData.getInterestDisplay()).append(PERCENT);
 		msg.append(NEW_LINE);
 
-		printMessage(msg);
+		printMessage(msg.toString());
 	}
 
-	private void printMessage(StringBuilder sb) {
-		System.out.println(sb.toString());
+	@Override
+	public void printRates(List<Rate> rates) {
+		String format = "%s%3.0f  " + // RATE_NUMBER
+				"%s%s  " +								// DATE
+				"%s%2.0f  " +								// YEAR
+				"%s%2.0f  " +								// MONTH
+				"%s%7.2f  " +							// RATE
+				"%s%6.2f  " +							// INTEREST
+				"%s%7.2f  " +							// CAPITAL
+				"%s%9.2f  " +							// LEFT_AMOUNT
+				"%s%3.0f";								// LEFT_MONTH
+
+		for (Rate rate : rates) {
+			String message = String.format(format,
+					RATE_NUMBER, rate.getRateNumber(),
+					DATE, rate.getTimePoint().getDate(),
+					YEAR, rate.getTimePoint().getYear(),
+					MONTH, rate.getTimePoint().getMonth(),
+					RATE, rate.getRateAmounts().getRateAmount(),
+					INTEREST, rate.getRateAmounts().getInterestAmount(),
+					CAPITAL, rate.getRateAmounts().getCapitalAmount(),
+					LEFT_AMOUNT, rate.getMortgageResidual().getAmount(),
+					LEFT_MONTH, rate.getMortgageResidual().getDuration()
+			);
+			printMessage(message);
+
+			if (rate.getRateNumber().intValue() % 12 == 0) {
+				System.out.println();
+			}
+		}
+	}
+
+	@Override
+	@SuppressWarnings("StringBufferReplaceableByString")
+	public void printSummary(Summary summary) {
+		StringBuilder msg = new StringBuilder(NEW_LINE);
+		msg.append(INTEREST_SUM).append(summary.getInterestSum().setScale(2, RoundingMode.HALF_UP)).append(CURRENCY);
+		msg.append(NEW_LINE);
+
+		printMessage(msg.toString());
+
+	}
+
+	private void printMessage(String s) {
+		System.out.println(s);
 	}
 }
