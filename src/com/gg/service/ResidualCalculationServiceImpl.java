@@ -4,32 +4,28 @@ import com.gg.model.InputData;
 import com.gg.model.MortgageResidual;
 import com.gg.model.Rate;
 import com.gg.model.RateAmounts;
+import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
 
-public class ResidualCalculationServiceImpl implements ResidualCalculationService {
+public class ResidualCalculationServiceImpl extends ResidualCalculationCommon implements ResidualCalculationService {
 
 	@Override
-	public MortgageResidual calculate(RateAmounts rateAmounts, InputData inputData) {
-		BigDecimal residualAmount = calculateResidualAmount(rateAmounts, inputData.getAmount());
+	public MortgageResidual calculate(RateAmounts rateAmounts, @NotNull InputData inputData) {
+		BigDecimal residualAmount = calculateResidualAmount(inputData.getAmount(), rateAmounts);
 		BigDecimal residualDuration = inputData.getMonthsDuration().subtract(BigDecimal.ONE);
 
 		return new MortgageResidual(residualAmount, residualDuration);
 	}
 
 	@Override
-	public MortgageResidual calculate(RateAmounts rateAmounts, Rate previousRate) {
+	public MortgageResidual calculate(RateAmounts rateAmounts, @NotNull Rate previousRate) {
 		MortgageResidual residual = previousRate.getMortgageResidual();
 
-		BigDecimal residualAmount = calculateResidualAmount(rateAmounts, residual.getAmount());
+		BigDecimal residualAmount = calculateResidualAmount(residual.getAmount(), rateAmounts);
 		BigDecimal residualDuration = residual.getDuration().subtract(BigDecimal.ONE);
 
 		return new MortgageResidual(residualAmount, residualDuration);
 	}
 
-	private static BigDecimal calculateResidualAmount(RateAmounts rateAmounts, BigDecimal amount) {
-		return amount.subtract(rateAmounts.getCapitalAmount())
-				.subtract(rateAmounts.getOverpayment().getAmount())
-				.max(BigDecimal.ZERO);
-	}
 }

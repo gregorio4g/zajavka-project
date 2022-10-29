@@ -9,9 +9,9 @@ public class Main {
 
 	public static void main(String[] args) {
 		InputData inputData = new InputData()
-				.withAmount(BigDecimal.valueOf(298000))
+				.withAmount(BigDecimal.valueOf(300000))
 				.withMonthsDuration(BigDecimal.valueOf(360))
-				.withRateType(RateType.CONSTANT)
+				.withRateType(RateType.DECREASING)
 				.withOverpaymentReduceWay(Overpayment.REDUCE_RATE);
 
 		PrintingService printingService = new PrintingServiceImpl();
