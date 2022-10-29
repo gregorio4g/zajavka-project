@@ -11,12 +11,16 @@ public class Main {
 		InputData inputData = new InputData()
 				.withAmount(BigDecimal.valueOf(298000))
 				.withMonthsDuration(BigDecimal.valueOf(360))
-				.withRateType(RateType.CONSTANT);
+				.withRateType(RateType.CONSTANT)
+				.withOverpaymentReduceWay(Overpayment.REDUCE_RATE);
 
 		PrintingService printingService = new PrintingServiceImpl();
 		RateCalculationService rateCalculationService = new RateCalculationServiceImpl(
 				new TimePointServiceImpl(),
-				new AmountsCalculationServiceImpl(),
+				new AmountsCalculationServiceImpl(
+						new ConstantAmountsCalculationServiceImpl(),
+						new DecreasingAmountsCalculationServiceImpl()
+				),
 				new OverpaymentCalculationServiceImpl(),
 				new ResidualCalculationServiceImpl(),
 				new ReferenceCalculationServiceImpl()

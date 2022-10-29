@@ -1,8 +1,10 @@
 package com.gg.service;
 
 import com.gg.model.*;
+import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -61,12 +63,12 @@ public class RateCalculationServiceImpl implements RateCalculationService {
 		return rates;
 	}
 
-	private static boolean mortgageFinished(Rate nextRate) {
-		BigDecimal toCompare = nextRate.getMortgageResidual().getAmount();
-		return BigDecimal.ZERO.equals(toCompare);
+	private static boolean mortgageFinished(@NotNull Rate nextRate) {
+		BigDecimal toCompare = nextRate.getMortgageResidual().getAmount().setScale(2, RoundingMode.HALF_UP);
+		return 0 == toCompare.intValue();
 	}
 
-	private Rate calculateRate(BigDecimal rateNumber, InputData inputData) {
+	private @NotNull Rate calculateRate(BigDecimal rateNumber, InputData inputData) {
 		TimePoint timePoint = timePointService.calculate(rateNumber, inputData);
 		Overpayment overpayment = overpaymentCalculationService.calculate(rateNumber, inputData);
 		RateAmounts rateAmounts = amountsCalculationService.calculate(inputData, overpayment);
