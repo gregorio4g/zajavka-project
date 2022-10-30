@@ -55,20 +55,20 @@ public class PrintingServiceImpl implements PrintingService {
 
 		for (Rate rate : rates) {
 			String message = String.format(format,
-					RATE_NUMBER, rate.getRateNumber(),
-					DATE, rate.getTimePoint().getDate(),
-					YEAR, rate.getTimePoint().getYear(),
-					MONTH, rate.getTimePoint().getMonth(),
-					RATE, rate.getRateAmounts().getRateAmount(),
-					INTEREST, rate.getRateAmounts().getInterestAmount(),
-					CAPITAL, rate.getRateAmounts().getCapitalAmount(),
-					OVERPAYMENT, rate.getRateAmounts().getOverpayment().getAmount(),
-					LEFT_AMOUNT, rate.getMortgageResidual().getAmount(),
-					LEFT_MONTH, rate.getMortgageResidual().getDuration()
+					RATE_NUMBER, rate.rateNumber(),
+					DATE, rate.timePoint().date(),
+					YEAR, rate.timePoint().year(),
+					MONTH, rate.timePoint().month(),
+					RATE, rate.rateAmounts().rateAmount(),
+					INTEREST, rate.rateAmounts().interestAmount(),
+					CAPITAL, rate.rateAmounts().capitalAmount(),
+					OVERPAYMENT, rate.rateAmounts().overpayment().amount(),
+					LEFT_AMOUNT, rate.mortgageResidual().amount(),
+					LEFT_MONTH, rate.mortgageResidual().duration()
 			);
 			printMessage(message);
 
-			if (rate.getRateNumber().intValue() % 12 == 0) {
+			if (rate.rateNumber().intValue() % 12 == 0) {
 				System.out.println();
 			}
 		}
@@ -78,11 +78,11 @@ public class PrintingServiceImpl implements PrintingService {
 	@SuppressWarnings("StringBufferReplaceableByString")
 	public void printSummary(Summary summary) {
 		StringBuilder msg = new StringBuilder(NEW_LINE);
-		msg.append(INTEREST_SUM).append(summary.getInterestSum().setScale(2, RoundingMode.HALF_UP)).append(CURRENCY);
+		msg.append(INTEREST_SUM).append(summary.interestSum().setScale(2, RoundingMode.HALF_UP)).append(CURRENCY);
 		msg.append(NEW_LINE);
-		msg.append(OVERPAYMENT_PROVISION).append(summary.getOverpaymentProvisions().setScale(2, RoundingMode.HALF_UP)).append(CURRENCY);
+		msg.append(OVERPAYMENT_PROVISION).append(summary.overpaymentProvisions().setScale(2, RoundingMode.HALF_UP)).append(CURRENCY);
 		msg.append(NEW_LINE);
-		msg.append(LOSTS_SUM).append(summary.getTotalLosts().setScale(2, RoundingMode.HALF_UP)).append(CURRENCY);
+		msg.append(LOSTS_SUM).append(summary.totalLost().setScale(2, RoundingMode.HALF_UP)).append(CURRENCY);
 		msg.append(NEW_LINE);
 
 		printMessage(msg.toString());

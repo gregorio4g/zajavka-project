@@ -15,7 +15,7 @@ public class ReferenceCalculationServiceImpl extends ResidualCalculationCommon i
 
 	@Override
 	public MortgageReference calculate(@NotNull InputData inputData, RateAmounts rateAmounts, @NotNull Rate previousRate) {
-		if (BigDecimal.ZERO.equals(previousRate.getMortgageResidual().getAmount()))	{
+		if (BigDecimal.ZERO.equals(previousRate.mortgageResidual().amount()))	{
 			return new MortgageReference(BigDecimal.ZERO, BigDecimal.ZERO);
 		}
 
@@ -30,15 +30,15 @@ public class ReferenceCalculationServiceImpl extends ResidualCalculationCommon i
 
 	@Contract("_, _ -> new")
 	private @NotNull MortgageReference reduceRateMortgageReference(@NotNull RateAmounts rateAmounts, @NotNull Rate previousRate) {
-		if (rateAmounts.getOverpayment().getAmount().compareTo(BigDecimal.ZERO) > 0) {
+		if (rateAmounts.overpayment().amount().compareTo(BigDecimal.ZERO) > 0) {
 			BigDecimal referenceAmount =
-					calculateResidualAmount(previousRate.getMortgageResidual().getAmount(), rateAmounts);
-			BigDecimal referenceDuration = previousRate.getMortgageResidual().getDuration().subtract(BigDecimal.ONE);
+					calculateResidualAmount(previousRate.mortgageResidual().amount(), rateAmounts);
+			BigDecimal referenceDuration = previousRate.mortgageResidual().duration().subtract(BigDecimal.ONE);
 			return new MortgageReference(referenceAmount, referenceDuration);
 		} else {
 			return new MortgageReference(
-					previousRate.getMortgageReference().getAmount(),
-					previousRate.getMortgageReference().getDuration()
+					previousRate.mortgageReference().getAmount(),
+					previousRate.mortgageReference().getDuration()
 			);
 		}
 	}

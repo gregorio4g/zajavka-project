@@ -64,7 +64,7 @@ public class RateCalculationServiceImpl implements RateCalculationService {
 	}
 
 	private static boolean mortgageFinished(@NotNull Rate nextRate) {
-		BigDecimal toCompare = nextRate.getMortgageResidual().getAmount().setScale(2, RoundingMode.HALF_UP);
+		BigDecimal toCompare = nextRate.mortgageResidual().amount().setScale(2, RoundingMode.HALF_UP);
 		return 0 == toCompare.intValue();
 	}
 
@@ -78,7 +78,7 @@ public class RateCalculationServiceImpl implements RateCalculationService {
 		return new Rate(rateNumber, timePoint, rateAmounts, mortgageResidual, mortgageReference);
 	}
 
-	private Rate calculateRate(BigDecimal rateNumber, InputData inputData, Rate previousRate) {
+	private @NotNull Rate calculateRate(BigDecimal rateNumber, InputData inputData, Rate previousRate) {
 		TimePoint timePoint = timePointService.calculate(rateNumber, inputData);
 		Overpayment overpayment = overpaymentCalculationService.calculate(rateNumber, inputData);
 		RateAmounts rateAmounts = amountsCalculationService.calculate(inputData, overpayment, previousRate);

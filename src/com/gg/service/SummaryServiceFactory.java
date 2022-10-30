@@ -2,28 +2,31 @@ package com.gg.service;
 
 import com.gg.model.Rate;
 import com.gg.model.Summary;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 public class SummaryServiceFactory {
 
-	public static SummaryService create() {
+	@Contract(pure = true)
+	public static @NotNull SummaryService create() {
 		return rates -> {
 			BigDecimal interestSum = calculate(
 					rates,
-					rate -> rate.getRateAmounts().getInterestAmount()
+					rate -> rate.rateAmounts().interestAmount()
 			);
 			BigDecimal provisions = calculate(
 					rates,
-					rate -> rate.getRateAmounts().getOverpayment().getProvisionAmount()
+					rate -> rate.rateAmounts().overpayment().provisionAmount()
 			);
-			BigDecimal totalLosts = interestSum.add(provisions);
-			return new Summary(interestSum, provisions, totalLosts);
+			BigDecimal totalLost = interestSum.add(provisions);
+			return new Summary(interestSum, provisions, totalLost);
 		};
 	}
 
-	private static BigDecimal calculate(List<Rate> rates, Function function) {
+	private static BigDecimal calculate(@NotNull List<Rate> rates, Function function) {
 		BigDecimal sum = BigDecimal.ZERO;
 		for (Rate rate : rates) {
 			sum = sum.add(function.calculate(rate));

@@ -7,8 +7,8 @@ import java.math.BigDecimal;
 
 public abstract class ResidualCalculationCommon {
 	static @NotNull BigDecimal calculateResidualAmount(@NotNull BigDecimal amount,@NotNull RateAmounts rateAmounts) {
-		return amount.subtract(rateAmounts.getCapitalAmount())
-				.subtract(rateAmounts.getOverpayment().getAmount())
+		return amount.subtract(rateAmounts.capitalAmount())
+				.subtract(rateAmounts.overpayment().amount())
 				.max(BigDecimal.ZERO);
 	}
 }

@@ -31,9 +31,9 @@ public class DecreasingAmountsCalculationServiceImpl extends AmountsCalculationC
 	public RateAmounts calculate(@NotNull InputData inputData, Overpayment overpayment, @NotNull Rate previousRate) {
 		BigDecimal interestPercent = inputData.getInterestPercent();
 
-		BigDecimal residualAmount = previousRate.getMortgageResidual().getAmount();
-		BigDecimal referenceAmount = previousRate.getMortgageReference().getAmount();
-		BigDecimal referenceDuration = previousRate.getMortgageReference().getDuration();
+		BigDecimal residualAmount = previousRate.mortgageResidual().amount();
+		BigDecimal referenceAmount = previousRate.mortgageReference().getAmount();
+		BigDecimal referenceDuration = previousRate.mortgageReference().getDuration();
 
 		BigDecimal interestAmount = calculateInterestAmount(residualAmount, interestPercent);
 		BigDecimal capitalAmount = calculateCapitalAmount(referenceAmount, referenceDuration, residualAmount);

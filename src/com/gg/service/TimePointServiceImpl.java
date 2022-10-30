@@ -2,6 +2,7 @@ package com.gg.service;
 
 import com.gg.model.InputData;
 import com.gg.model.TimePoint;
+import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -20,16 +21,16 @@ public class TimePointServiceImpl implements TimePointService {
 		return new TimePoint(date, year, month);
 	}
 
-	private LocalDate calculateDate(BigDecimal rateNumber, InputData inputData) {
+	private LocalDate calculateDate(@NotNull BigDecimal rateNumber, @NotNull InputData inputData) {
 		return inputData.getRepaymentStartDate()
 				.plus(rateNumber.subtract(BigDecimal.ONE).intValue(), ChronoUnit.MONTHS);
 	}
 
-	private BigDecimal calculateYear(final BigDecimal rateNumber) {
+	private @NotNull BigDecimal calculateYear(final @NotNull BigDecimal rateNumber) {
 		return rateNumber.divide(YEAR, RoundingMode.UP).max(BigDecimal.ONE);
 	}
 
-	private BigDecimal calculateMonth(final BigDecimal rateNumber) {
+	private BigDecimal calculateMonth(final @NotNull BigDecimal rateNumber) {
 		return BigDecimal.ZERO.equals(rateNumber.remainder(YEAR)) ? YEAR : rateNumber.remainder(YEAR);
 	}
 }
