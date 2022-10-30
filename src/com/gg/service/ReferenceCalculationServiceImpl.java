@@ -33,7 +33,7 @@ public class ReferenceCalculationServiceImpl extends ResidualCalculationCommon i
 		if (rateAmounts.getOverpayment().getAmount().compareTo(BigDecimal.ZERO) > 0) {
 			BigDecimal referenceAmount =
 					calculateResidualAmount(previousRate.getMortgageResidual().getAmount(), rateAmounts);
-			BigDecimal referenceDuration = previousRate.getMortgageResidual().getDuration();
+			BigDecimal referenceDuration = previousRate.getMortgageResidual().getDuration().subtract(BigDecimal.ONE);
 			return new MortgageReference(referenceAmount, referenceDuration);
 		} else {
 			return new MortgageReference(

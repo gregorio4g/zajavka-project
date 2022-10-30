@@ -11,8 +11,8 @@ public class Main {
 		InputData inputData = new InputData()
 				.withAmount(BigDecimal.valueOf(300000))
 				.withMonthsDuration(BigDecimal.valueOf(360))
-				.withRateType(RateType.DECREASING)
-				.withOverpaymentReduceWay(Overpayment.REDUCE_RATE);
+				.withRateType(RateType.CONSTANT)
+				.withOverpaymentReduceWay(Overpayment.REDUCE_PERIOD);
 
 		PrintingService printingService = new PrintingServiceImpl();
 		RateCalculationService rateCalculationService = new RateCalculationServiceImpl(
