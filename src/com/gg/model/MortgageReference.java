@@ -1,19 +1,21 @@
 package com.gg.model;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.math.BigDecimal;
 
 public class MortgageReference {
 
-	private final BigDecimal referenceAmount;
+	private final @NotNull BigDecimal referenceAmount;
 
-	private final BigDecimal referenceDuration;
+	private final @NotNull BigDecimal referenceDuration;
 
-	public MortgageReference(BigDecimal referenceAmount, BigDecimal referenceDuration) {
+	public MortgageReference(@NotNull BigDecimal referenceAmount, @NotNull BigDecimal referenceDuration) {
 		this.referenceAmount = referenceAmount;
 		this.referenceDuration = referenceDuration;
 	}
 
-	public BigDecimal getAmount() {
+	public @NotNull BigDecimal getAmount() {
 		return referenceAmount;
 	}
 

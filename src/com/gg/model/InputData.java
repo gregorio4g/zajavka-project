@@ -1,72 +1,74 @@
 package com.gg.model;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.Map;
 
 public class InputData {
-	private static final BigDecimal PERCENT = BigDecimal.valueOf(100);
+	private static final @NotNull BigDecimal PERCENT = BigDecimal.valueOf(100);
 
-	private LocalDate repaymentStartDate = LocalDate.of(2020, 1, 6);
+	private @NotNull LocalDate repaymentStartDate = LocalDate.of(2020, 1, 6);
 
-	private BigDecimal wiborPercent = new BigDecimal("1.73");
+	private @NotNull BigDecimal wiborPercent = new BigDecimal("1.73");
 
-	private BigDecimal amount = new BigDecimal("300000");
-	private BigDecimal monthsDuration = new BigDecimal("180");
+	private @NotNull BigDecimal amount = new BigDecimal("300000");
+	private @NotNull BigDecimal monthsDuration = new BigDecimal("180");
 
-	private RateType rateType = RateType.DECREASING;
+	private @NotNull RateType rateType = RateType.DECREASING;
 
-	private BigDecimal bankMarginPercent = new BigDecimal("1.9");
+	private @NotNull BigDecimal bankMarginPercent = new BigDecimal("1.9");
 
-	private Map<Integer, BigDecimal> overpaymentSchema = Map.of(
+	private @NotNull Map<Integer, BigDecimal> overpaymentSchema = Map.of(
 			5, BigDecimal.valueOf(10000),
 			6, BigDecimal.valueOf(10000),
 			7, BigDecimal.valueOf(10000),
 			8, BigDecimal.valueOf(10000)
 	);
-	private String overpaymentReduceWay = Overpayment.REDUCE_PERIOD;
+	private @NotNull String overpaymentReduceWay = Overpayment.REDUCE_PERIOD;
 
-	private BigDecimal overpaymentProvisionPercent = BigDecimal.valueOf(3);
-	private BigDecimal overpaymentProvisionMonths = BigDecimal.valueOf(36);
+	private @NotNull BigDecimal overpaymentProvisionPercent = BigDecimal.valueOf(3);
+	private @NotNull BigDecimal overpaymentProvisionMonths = BigDecimal.valueOf(36);
 
 	@SuppressWarnings("unused")
-	public InputData withOverpaymentSchema(Map<Integer, BigDecimal> overpaymentSchema) {
+	public @NotNull InputData withOverpaymentSchema(@NotNull Map<Integer, BigDecimal> overpaymentSchema) {
 		this.overpaymentSchema = overpaymentSchema;
 		return this;
 	}
 
 	@SuppressWarnings("unused")
-	public InputData withOverpaymentReduceWay(String overpaymentReduceWay) {
+	public @NotNull InputData withOverpaymentReduceWay(@NotNull String overpaymentReduceWay) {
 		this.overpaymentReduceWay = overpaymentReduceWay;
 		return this;
 	}
 
 	@SuppressWarnings("unused")
-	public InputData withOverpaymentProvisionPercent(BigDecimal overpaymentProvisionPercent) {
+	public @NotNull InputData withOverpaymentProvisionPercent(@NotNull BigDecimal overpaymentProvisionPercent) {
 		this.overpaymentProvisionPercent = overpaymentProvisionPercent;
 		return this;
 	}
 
 	@SuppressWarnings("unused")
-	public InputData withOverpaymentProvisionMonths(BigDecimal overpaymentProvisionMonths) {
+	public @NotNull InputData withOverpaymentProvisionMonths(@NotNull BigDecimal overpaymentProvisionMonths) {
 		this.overpaymentProvisionMonths = overpaymentProvisionMonths;
 		return this;
 	}
 
 	@SuppressWarnings("unused")
-	public InputData withRepaymentStartDate(LocalDate repaymentStartDate) {
+	public @NotNull InputData withRepaymentStartDate(@NotNull LocalDate repaymentStartDate) {
 		this.repaymentStartDate = repaymentStartDate;
 		return this;
 	}
 
 	@SuppressWarnings("unused")
-	public InputData withWiborPercent(BigDecimal wiborPercent) {
+	public @NotNull InputData withWiborPercent(@NotNull BigDecimal wiborPercent) {
 		this.wiborPercent = wiborPercent;
 		return this;
 	}
 
-	public InputData withAmount(BigDecimal amount) {
+	public @NotNull InputData withAmount(@NotNull BigDecimal amount) {
 		this.amount = amount;
 		return this;
 	}
